@@ -5,8 +5,9 @@ import { BookData } from '@/types';
 async function AllBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    { cache: 'no-store' }
+    { cache: 'force-cache' }
   );
+
   if (!response.ok) return <div>오류가 발생했습니다.</div>;
 
   const allBooks: BookData[] = await response.json();
@@ -22,7 +23,7 @@ async function AllBooks() {
 async function RecoBooks() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
-    { next: { revalidate: 3 } } // page ISR 방식과 유사
+    { next: { revalidate: 3 } } // page라우터 ISR 방식과 유사
   );
   if (!response.ok) return <div>오류가 발생했습니다.</div>;
 
